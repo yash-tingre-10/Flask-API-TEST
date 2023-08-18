@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask API Interaction</title>
+    <!-- Include Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        /* Custom style for the response h2 */
+        #responseMessage{
+            color: green; /* Set the font color to green */
+            font-weight: bold;
+        }
+        .response-header {
+            color: green; /* Set the font color to green */
+            font-weight:300; /* Set the font weight to bold */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Flask API Interaction</h3>
+        <div class="row">
+            <div class="col s6">
+                <h3>Send Request</h3>
+                <form id="requestForm">
+                    <div class="input-field">
+                        <select id="language" name="language">
+                            <option value="" disabled selected>Select a language</option>
+                            <option value="English">English</option>
+                            <option value="French">French</option>
+                            <option value="Hindi">Hindi</option>
+                        </select>
+                        <label>Select Language:</label>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit">Send</button>
+                </form>
+            </div>
+            <div class="col s6">
+                <!-- Apply the custom style to the response header -->
+                <h2 class="response-header">Received Response</h2>
+                <h2 id="responseMessage"></h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Materialize JavaScript and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('select').formSelect(); // Initialize the dropdown
+            $('#requestForm').submit(function(e) {
+                e.preventDefault();
+                const language = $('#language').val();
+                $.get(`/hello?lang=${language}`, function(data) {
+                    $('#responseMessage').text(data.message);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
